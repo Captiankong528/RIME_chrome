@@ -1,0 +1,28 @@
+# 只把 RIME 扩展本身入库。下面这些都不属于扩展源码。
+
+# --- 工具链与下载缓存（约 1.1 GB）---
+# Chrome for Testing / Firefox / geckodriver 都是本地跑 e2e 用的，见 CHANGELOG.md 附录 B
+.tools/
+
+# --- 临时产物（约 490 MB）---
+# 截图、测试 profile、从 PDF 抽出的中间文本、一次性脚本
+.tmp/
+
+# --- 上游参考克隆（0.6 MB）---
+# 上游项目地址：https://github.com/LibreService/my_rime
+# 需要时自己 clone，不必跟着本仓库走；而且它是嵌套 git 仓库，不能直接提交
+reference/
+
+# --- 与这个扩展无关的文件 ---
+# HPC 超算用户手册（pdf 文件夹 + 同名 zip）
+HPC 22.0.0 超算用户手册 02(pdf)/
+HPC 22.0.0 超算用户手册 02(pdf).zip
+
+# --- 本地遗留 ---
+*.log
+
+# --- 构建/签名产物（根目录也放了几份早期手动打的）---
+# 可安装包统一由 `node scripts/pack-crx.mjs` 产出到 rime-browser-ime/dist/，不进仓库
+*.crx
+# 签名私钥：决定扩展 id，弄丢就只能卸载重装（详见 CHANGELOG.md）
+*.pem

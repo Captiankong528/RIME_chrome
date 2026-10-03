@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>RIME 网页输入法</title>
+  <style>
+    :root { color-scheme: light; }
+    body {
+      width: 292px;
+      margin: 0;
+      padding: 12px 14px 10px;
+      background: #fff;
+      color: #1f2329;
+      font: 13px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei",
+            "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .title { font-weight: 600; }
+    .status { display: flex; align-items: center; gap: 6px; color: #475467; font-size: 12px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #98a2b3; flex: none; }
+    .dot.ready { background: #12b76a; }
+    .dot.loading { background: #f79009; }
+    .dot.error { background: #f04438; }
+    .row { margin-bottom: 10px; }
+    .field { display: block; margin-bottom: 10px; }
+    .field[hidden] { display: none; }
+    .label { display: block; color: #667085; font-size: 12px; margin-bottom: 4px; }
+    button {
+      font: inherit;
+      padding: 7px 12px;
+      border-radius: 6px;
+      border: 1px solid #d0d5dd;
+      background: #fff;
+      color: #344054;
+      cursor: pointer;
+    }
+    button:hover { background: #f9fafb; }
+    button.primary { background: #1e5bd6; border-color: #1e5bd6; color: #fff; }
+    button.primary:hover { background: #1a4fbb; }
+    button:disabled { opacity: .6; cursor: default; }
+    #toggle { width: 100%; }
+    select {
+      font: inherit;
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #d0d5dd;
+      border-radius: 6px;
+      background: #fff;
+    }
+    select:disabled { opacity: .6; }
+    .hint { color: #98a2b3; font-size: 12px; margin: 0 0 10px; }
+    .hint:empty { display: none; }
+    footer { border-top: 1px solid #f2f4f7; padding-top: 8px; }
+    .link {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #1e5bd6;
+      padding: 4px 0;
+      text-align: left;
+    }
+    .link:hover { background: transparent; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="title">RIME 网页输入法</span>
+    <span class="status"><span class="dot" id="engine-dot"></span><span id="engine-text">未启动</span></span>
+  </header>
+
+  <div class="row">
+    <button id="toggle" class="primary">开启输入法</button>
+  </div>
+
+  <label class="field">
+    <span class="label">输入法</span>
+    <select id="schema"></select>
+  </label>
+
+  <label class="field" id="trad-simp-field" hidden>
+    <span class="label">简繁</span>
+    <select id="trad-simp"></select>
+  </label>
+
+  <p class="hint" id="hint"></p>
+
+  <footer>
+    <button id="open-options" class="link">打开完整设置页（自检 / 候选数 / 说明）</button>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+[
+  {
+    "target": "luna-pinyin",
+    "package": "@rime-contrib/luna-pinyin",
+    "version": "0.1.1",
+    "files": [
+      "luna_pinyin.prism.bin",
+      "luna_pinyin.reverse.bin",
+      "luna_pinyin.schema.yaml",
+      "luna_pinyin.table.bin",
+      "luna_pinyin_fluency.schema.yaml",
+      "luna_quanpin.prism.bin",
+      "luna_quanpin.schema.yaml"
+    ]
+  },
+  {
+    "target": "stroke",
+    "package": "@rime-contrib/stroke",
+    "version": "0.1.3",
+    "files": [
+      "stroke.prism.bin",
+      "stroke.reverse.bin",
+      "stroke.schema.yaml",
+      "stroke.table.bin"
+    ]
+  },
+  {
+    "target": "double-pinyin",
+    "package": "@rime-contrib/double-pinyin",
+    "version": "0.1.1",
+    "files": [
+      "double_pinyin.prism.bin",
+      "double_pinyin.schema.yaml",
+      "double_pinyin_abc.prism.bin",
+      "double_pinyin_abc.schema.yaml",
+      "double_pinyin_flypy.prism.bin",
+      "double_pinyin_flypy.schema.yaml",
+      "double_pinyin_mspy.prism.bin",
+      "double_pinyin_mspy.schema.yaml",
+      "double_pinyin_pyjj.prism.bin",
+      "double_pinyin_pyjj.schema.yaml"
+    ]
+  },
+  {
+    "target": "pinyin-simp",
+    "package": "@rime-contrib/pinyin-simp",
+    "version": "0.1.1",
+    "files": [
+      "pinyin_simp.prism.bin",
+      "pinyin_simp.reverse.bin",
+      "pinyin_simp.schema.yaml",
+      "pinyin_simp.table.bin"
+    ]
+  },
+  {
+    "target": "wubi",
+    "package": "@rime-contrib/wubi",
+    "version": "0.1.2",
+    "files": [
+      "wubi86.prism.bin",
+      "wubi86.reverse.bin",
+      "wubi86.schema.yaml",
+      "wubi86.table.bin",
+      "wubi_pinyin.prism.bin",
+      "wubi_pinyin.schema.yaml",
+      "wubi_trad.prism.bin",
+      "wubi_trad.schema.yaml"
+    ]
+  },
+  {
+    "target": "terra-pinyin",
+    "package": "@rime-contrib/terra-pinyin",
+    "version": "0.1.1",
+    "files": [
+      "terra_pinyin.prism.bin",
+      "terra_pinyin.reverse.bin",
+      "terra_pinyin.schema.yaml",
+      "terra_pinyin.table.bin"
+    ]
+  },
+  {
+    "target": "bopomofo",
+    "package": "@rime-contrib/bopomofo",
+    "version": "0.1.1",
+    "files": [
+      "bopomofo.prism.bin",
+      "bopomofo.schema.yaml",
+      "bopomofo_express.prism.bin",
+      "bopomofo_express.schema.yaml"
+    ]
+  }
+]

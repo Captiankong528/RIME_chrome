@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "RIME 网页输入法",
+  "version": "0.1.0",
+  "description": "基于 librime(WebAssembly) 的浏览器输入法：在任意网页上用朙月拼音等 RIME 方案打字，全部本地运行。",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "RIME 网页输入法（点击打开设置面板）",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "toggle-ime": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      },
+      "description": "切换 RIME 输入法（中/英）"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "js": [
+        "src/common/const.js",
+        "src/content/caret.js",
+        "src/content/candidate-window.js",
+        "src/content/status-bar.js",
+        "src/content/ime.js",
+        "src/content/bootstrap.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

@@ -1,0 +1,11 @@
+# 依赖与产物
+node_modules/
+dist/
+.cache/
+.tmp/
+*.log
+
+# 扩展运行时不需要、但本地会生成的临时文件
+.crx
+*.pem
+test-output/

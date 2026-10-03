@@ -1,0 +1,23 @@
+{
+  "name": "rime-browser-ime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chrome / Firefox MV3 扩展形态的 RIME 输入法（基于 librime WebAssembly）",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "test": "node scripts/check.mjs && node scripts/engine-smoke.mjs && node scripts/content-smoke.mjs && node scripts/ipc-smoke.mjs && node scripts/ipc-smoke.mjs --platform=firefox",
+    "check": "node scripts/check.mjs",
+    "smoke": "node scripts/engine-smoke.mjs && node scripts/content-smoke.mjs && node scripts/ipc-smoke.mjs",
+    "smoke:firefox": "node scripts/ipc-smoke.mjs --platform=firefox",
+    "assets": "node scripts/fetch-assets.mjs",
+    "assets:all": "node scripts/fetch-assets.mjs --all",
+    "icons": "node scripts/make-icons.mjs",
+    "package": "node scripts/pack-crx.mjs",
+    "package:zip": "node scripts/package.mjs",
+    "package:firefox": "node scripts/build-firefox.mjs",
+    "verify:crx": "node scripts/verify-crx.mjs",
+    "e2e": "node scripts/e2e-test.mjs",
+    "e2e:firefox": "node scripts/e2e-firefox.mjs"
+  }
+}

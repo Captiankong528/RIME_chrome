@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>RIME 网页输入法 · 演练场</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 24px 80px;
+      background: #f6f7f9;
+      color: #1f2329;
+      font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    }
+    main { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 20px; margin: 0 0 6px; }
+    p.sub { color: #667085; margin: 0 0 24px; }
+    .card {
+      background: #fff;
+      border: 1px solid #e4e7ec;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    label { display: block; color: #344054; margin-bottom: 6px; font-size: 13px; }
+    textarea, input[type="text"], div[contenteditable] {
+      width: 100%;
+      box-sizing: border-box;
+      font: 16px/1.7 inherit;
+      padding: 10px 12px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      background: #fff;
+      color: inherit;
+      outline: none;
+    }
+    textarea:focus, input[type="text"]:focus, div[contenteditable]:focus {
+      border-color: #1e5bd6;
+      box-shadow: 0 0 0 3px rgba(30, 91, 214, .12);
+    }
+    textarea { height: 120px; resize: vertical; }
+    div[contenteditable] { min-height: 64px; }
+    kbd {
+      background: #f2f4f7; border-radius: 4px; padding: 1px 5px;
+      font: 12px ui-monospace, Consolas, monospace;
+    }
+    .state { font-size: 13px; color: #475467; }
+    .state b { color: #1e5bd6; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>演练场</h1>
+    <p class="sub">
+      这个页面和扩展用的是同一套引擎，用来在装好扩展后立刻验证输入是否正常。
+      当前开关状态：<span class="state"><b id="state">读取中…</b></span>
+      （按 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Space</kbd> 切换，或到设置页切换）
+    </p>
+
+    <div class="card">
+      <label for="ta">多行文本框（textarea）</label>
+      <textarea id="ta" placeholder="在这里敲拼音，例如 nihao → 你好"></textarea>
+    </div>
+
+    <div class="card">
+      <label for="ti">单行输入框（input）</label>
+      <input id="ti" type="text" placeholder="同样可以输入">
+    </div>
+
+    <div class="card">
+      <label>富文本（contenteditable）</label>
+      <div id="ce" contenteditable="true" data-placeholder="点这里再敲拼音"></div>
+    </div>
+  </main>
+
+  <!--
+    直接复用 content script 的那几个文件。
+    它们只依赖 chrome.runtime / chrome.storage 和标准 DOM，在扩展页面里同样跑得通。
+    注意：扩展页面不允许内联脚本（CSP 是 script-src 'self'），所以辅助逻辑单独成文件。
+  -->
+  <script src="../common/const.js"></script>
+  <script src="../content/caret.js"></script>
+  <script src="../content/candidate-window.js"></script>
+  <script src="../content/status-bar.js"></script>
+  <script src="../content/ime.js"></script>
+  <script src="../content/bootstrap.js"></script>
+  <script src="playground.js"></script>
+</body>
+</html>

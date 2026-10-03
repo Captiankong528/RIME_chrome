@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>RIME engine host</title>
+</head>
+<body>
+  <!--
+    Offscreen 文档：Chrome 那条路的引擎宿主，一个不可见的扩展页面。
+    引擎本体在 src/engine/host.js（平台无关），Firefox 的背景页复用同一份代码；
+    这里只负责「把状态报给 background、把请求转给宿主」。
+
+    之所以不放在 service worker 里，是因为 MV3 的 SW 会在空闲约 30 秒后被回收、
+    CSP 也不允许在 SW 里编译 wasm；而 librime 的初始化（2.8MB wasm + 1.1MB 数据 +
+    wasm 编译）代价不小，每次唤醒都重建实例会让第一次按键明显卡顿。
+  -->
+  <script type="module" src="offscreen.js"></script>
+</body>
+</html>
