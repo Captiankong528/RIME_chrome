@@ -1,0 +1,19 @@
+# 让「所有文本文件在仓库里都是 LF」这件事由文件本身保证，
+# 而不是依赖每个开发者本机的 core.autocrlf —— 本仓库同时要在 Windows 上开发
+# 和让脚本在 Node / CI 下跑，行尾飘了会直接表现成 check.mjs 的 diff 噪音。
+
+* text=auto eol=lf
+
+# 下面这些必须是二进制，绝不能让 git 做行尾转换或 diff。
+# （git 的文本探测对 .bin / .wasm 已经判成二进制，这里是显式固化下来。）
+*.png  binary
+*.wasm binary
+*.data binary
+*.bin  binary
+*.crx  binary
+*.tgz  binary
+*.zip  binary
+
+# 包管理器的锁文件与生成物在 diff / 语言统计里没有意义
+package-lock.json  -diff linguist-generated
+rime-browser-ime/schemas/manifest.json  linguist-generated
