@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="RIME">
+  <rect x="4" y="10" width="56" height="44" rx="10" fill="#247bbf"/>
+  <rect x="12" y="20" width="12" height="10" rx="2" fill="#ffffff"/>
+  <rect x="26" y="20" width="12" height="10" rx="2" fill="#ffffff"/>
+  <rect x="40" y="20" width="12" height="10" rx="2" fill="#ffffff"/>
+  <rect x="12" y="34" width="40" height="10" rx="2" fill="#ffffff" opacity="0.85"/>
+</svg>

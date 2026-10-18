@@ -1,0 +1,9 @@
+# 由 scripts/prepare-assets.mjs 生成（约 27 MB 的 wasm、词库与方案文件）。
+# 不纳入版本控制：跑一次脚本就能从 rime-browser-ime/ 的产物重新摊出来。
+assets/
+
+# 页面写进来的诊断日志（/rime-ime/diagnostics）
+diagnostics.log
+
+# Electron 以 node 模式运行时落在 cwd 的 crashpad 噪声
+debug.log

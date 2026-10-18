@@ -6,7 +6,8 @@
 
 | 路径 | 用途 |
 | --- | --- |
-| [`rime-browser-ime/`](rime-browser-ime/) | 项目本体：一个 Manifest V3 扩展，在任意网页上提供 RIME 输入。**仓库里只有这一个目录是源码。** |
+| [`rime-browser-ime/`](rime-browser-ime/) | 项目本体：一个 Manifest V3 扩展，在任意网页上提供 RIME 输入。 |
+| [`dsh-rime-ime/`](dsh-rime-ime/) | 同一套引擎的 **DSH Desktop 插件**：在 DSH 自己的会话输入框里打中文。 |
 
 另外三份文档：**[`CHANGELOG.md`](CHANGELOG.md)** 记录做过什么、为什么这么做
 （含环境陷阱、CRX3 格式、Firefox 移植、常用命令速查与架构速查）；
@@ -41,6 +42,28 @@ node scripts/pack-crx.mjs
 「重新加载」即可生效。三种安装方式的取舍见
 [`rime-browser-ime/README.md`](rime-browser-ime/README.md) 的「安装」一节；
 打包产物共约 36 MB（主要是 15 个输入方案的预编译词典），压缩后 16.5 MB。
+
+## 在 DSH Desktop 里用（插件）
+
+扩展形态在 Electron 里装不进去，所以另做了一个 DSH 插件
+[`dsh-rime-ime/`](dsh-rime-ime/)：同一个 librime 产物，换成 DSH 的槽位、按键与
+编辑器 API 接入。**已经装进当前 profile**（`plugin_manager` → `install_bundle`，
+pnpm 以 `link:` 挂载所以没复制 27 MB 资源），开关在侧边栏「插件」页的那一行，
+或者按 `Ctrl+Shift+Space`。
+
+用法：点会话输入框 → 打 `nihao` → 空格 → 「你好」进草稿（不会自动发送）。
+候选窗浮在输入卡片上方，右边工具行的「中 ▾」是开关和方案菜单。
+
+```bash
+cd dsh-rime-ime
+node scripts/prepare-assets.mjs   # 从 rime-browser-ime 摊出 wasm + 词库（约 27 MB）
+node scripts/engine-check.mjs     # 引擎链路自检（不需要浏览器）
+node scripts/bundle-check.mjs     # 包结构检查
+```
+
+诊断日志：`%DSH_HOME%\logs\rime-ime-diagnostics.log` —— 页面每次加载都会写
+`client-ready` / `engine-assets` / `selftest`（自检里 `nihao` + 空格 必须得到「你好」）。
+细节与架构见 [`dsh-rime-ime/README.md`](dsh-rime-ime/README.md)。
 
 ## 为什么要改造
 

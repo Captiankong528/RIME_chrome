@@ -1,0 +1,31 @@
+{
+  "name": "@local/dsh-rime-ime",
+  "version": "1.0.0",
+  "private": true,
+  "description": "在 DSH Desktop 的会话输入框里提供 RIME（librime wasm）中文输入法",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "meta": {
+    "title": "RIME 输入法",
+    "description": "把 librime（WebAssembly）搬进 DSH Desktop：会话输入框里直接打拼音／双拼／五笔，候选窗跟随输入框，词频随用户词典持久化。"
+  },
+  "icon": "./icon.svg",
+  "license": "AGPL-3.0-or-later"
+}

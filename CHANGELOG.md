@@ -609,6 +609,58 @@ reason 被接受）、**真实 Worker 里在扩展 CSP 下编译 wasm**（`wasm-
 
 ---
 
+## 2026-10-18：DSH Desktop 插件（`dsh-rime-ime/`）
+
+把同一套 librime 产物从「浏览器扩展」搬进 **DSH Desktop**：不是另一个网页，而是
+会话输入框本身——候选窗浮在输入卡片上方，选中的词走宿主自己的编辑器 API 上屏。
+浏览器扩展这条路在 Electron 里走不通（装不了 MV3 扩展），所以这一版是 DSH 的
+Cordis 插件（一个包，Host + Client 两个半边）。
+
+做了什么：
+
+1. **资源改由 Host 的 HTTP 路由供给**：`/rime-ime/{config.json,engine/*,schemas/*}`。
+   Client 的 JS bundle 装不下 27 MB 二进制，而 dsh 的 `/plugins` 路由只放行
+   `client.*.js` 这类代码分片。
+2. **Worker 不再自己发网络请求**：主线程把 `rime.js` / `rime.wasm` / `rime.data`
+   取成字节，用 Blob URL 起 Worker 再 `postMessage` 发进去，worker 用
+   `wasmBinary` 与 `getPreloadedPackage` 直接喂 emscripten。绕开了「Worker 的子请求
+   未必带渲染进程令牌（`x-dsh-desktop-renderer`）」这个坑。
+3. **按键与上屏换成宿主自己的机制**：`window` capture 阶段截获 keydown（只在焦点
+   落在会话输入框时接管），上屏用槽位 props 里的
+   `inputActions.insertText(text, captureInsertion())`，不碰 DOM。
+4. **界面用槽位而不是浮层**：候选窗/方案菜单进 `conversation.input.overlay`，
+   中/EN 胶囊进 `conversation.input.right`；样式只用 `--dsw-alias-*` 主题令牌。
+5. **自带诊断通道**：Client 把启动、资源加载、引擎自检、键入链路探测、上屏失败
+   写进 `$DSH_HOME/logs/rime-ime-diagnostics.log`（`POST /rime-ime/diagnostics`），
+   页面上出问题时先看这份日志。
+
+方案集缩减到 5 个 target / 12 个方案（朙月拼音、袖珍简拼、5 种双拼、86五笔 ×3、
+五笔画），约 27 MB；`scripts/prepare-assets.mjs` 从 `rime-browser-ime/` 的产物摊出来。
+
+验证（`dsh-rime-ime/scripts/`）：
+
+```
+node scripts/prepare-assets.mjs   assets/ 就绪：26.9 MB（引擎 3.9 MB）
+node scripts/engine-check.mjs     11 项：boot（无网络）→ init 209 ms → nihao+空格→你好 → 86五笔 有候选
+node scripts/bundle-check.mjs     JSON / manifest / client.js 标记
+```
+
+真机（DSH Desktop 2.0.17 / Electron 44 / Chromium 152）：
+
+```
+client-ready    页面加载即激活，两个槽位都占上（conversation.input.overlay / .right）
+config          默认 luna_pinyin、pageSize 5、selfTest true
+engine-assets   78 ms 取到 rime.wasm 2.8 MB + rime.data 1.1 MB（经 Host 路由）
+selftest        ok:true  committed:"你好"    ← 引擎在渲染进程里真的跑起来了
+layout          panel 底边 = 输入卡片顶边 - 8px；pill 105×24 落在工具行右侧
+```
+
+> 已知前提：这层输入和浏览器扩展一样，只在**操作系统输入法处于英文/直通模式**时
+> 才看得见字母。系统 IME 在中文态时按键会被它吃掉（我们收到 `isComposing`/229），
+> 那是系统输入法在组字，不该抢。
+
+---
+
 ## 附录 A：已经踩平的坑（别再踩一遍）
 
 这些都是用真实浏览器实测出来的，不是推测。

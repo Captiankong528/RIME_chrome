@@ -1,0 +1,13 @@
+# RIME 输入法插件：Host 半边负责把引擎资源（wasm／词典）以只读 HTTP 路由
+# 供给页面，Client 半边负责按键、候选窗与上屏。两者同一个包，故只插入一行。
+- insert:
+    - id: rime-ime
+      name: '@local/dsh-rime-ime'
+      config:
+        # Client 首次启动时的默认方案与候选数；都存在页面的 localStorage 里，
+        # 改这里只影响还没选过方案的新页面。
+        defaultSchemaId: luna_pinyin
+        pageSize: 5
+        # 页面加载后在后台跑一次「nihao + 空格 → 你好」自检，并把结果写进诊断日志。
+        # 它同时起到预热引擎的作用；不想每次启动都装载词库时改成 false。
+        selfTest: true
